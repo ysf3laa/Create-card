@@ -2,104 +2,156 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>صانع البطاقات التفاعلية</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2a1631">
+<title>صانع البطاقات</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--primary:#ff4757;--secondary:#2f3542;--card-bg:#fff}
-*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Tahoma,sans-serif}
-body{background:linear-gradient(135deg,#a8c0ff 0%,#3f2b96 100%);min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px}
-.container{background:var(--card-bg);border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,.3);width:100%;max-width:500px;overflow:hidden}
-.header{background:var(--primary);color:#fff;padding:20px;text-align:center;font-size:1.2rem;font-weight:bold}
-.content{padding:25px}
-.form-group{margin-bottom:15px}
-label{display:block;margin-bottom:5px;font-weight:600;color:var(--secondary);font-size:.9rem}
-input,textarea,select{width:100%;padding:12px;border:2px solid #dfe4ea;border-radius:12px;font-size:1rem}
-input:focus,textarea:focus,select:focus{border-color:var(--primary);outline:none}
-textarea{resize:vertical;min-height:100px}
-.btn{width:100%;padding:14px;background:var(--primary);color:#fff;border:none;border-radius:12px;font-size:1.1rem;font-weight:bold;cursor:pointer;margin-top:10px}
-.btn:disabled{background:#ccc;cursor:not-allowed}
-.btn-secondary{background:#747d8c}
+:root{--plum:#2a1631;--paper:#fbf4ee;--ink:#2b1a2e;--muted:#7d6a80;--rose:#d94f6b;--rose-d:#b23a55;--sage:#6f9b82;--gold:#e6b566;--line:#e8d9d2;
+--ui:'Cairo','Segoe UI',Tahoma,sans-serif;--hand:'Aref Ruqaa','Cairo',serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--ui);color:var(--ink);min-height:100vh;background:radial-gradient(900px 500px at 85% -10%,#6a2c55 0,transparent 60%),radial-gradient(700px 500px at 0% 110%,#3c2a5c 0,transparent 60%),var(--plum);padding:max(20px,env(safe-area-inset-top)) 16px max(28px,env(safe-area-inset-bottom))}
+.app{max-width:480px;margin:0 auto}
 .hidden{display:none!important}
-.pin-screen{text-align:center;padding:40px 20px}
-.pin-dots{display:flex;justify-content:center;gap:15px;margin:30px 0}
-.pin-dot{width:20px;height:20px;border-radius:50%;border:2px solid var(--primary)}
-.pin-dot.filled{background:var(--primary)}
-.pin-keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;max-width:300px;margin:0 auto}
-.pin-btn{padding:20px;font-size:1.5rem;border:1px solid #dfe4ea;border-radius:50%;background:#fff;cursor:pointer}
-.pin-btn:active{background:var(--primary);color:#fff}
-.template-envelope{perspective:1000px;height:400px;display:flex;justify-content:center;align-items:center;cursor:pointer}
-.envelope{width:300px;height:200px;background:#ff6b81;position:relative;transform-style:preserve-3d;transition:transform 1s;border-radius:10px}
-.envelope.open{transform:rotateX(180deg)}
-.envelope-flap{position:absolute;top:0;left:0;width:0;height:0;border-left:150px solid transparent;border-right:150px solid transparent;border-top:100px solid #ff4757;transform-origin:top;transition:transform .6s .4s;z-index:2}
-.envelope.open .envelope-flap{transform:rotateX(180deg);z-index:0}
-.envelope-body{position:absolute;bottom:0;width:100%;height:100%;background:#ff6b81;border-radius:10px;z-index:1;display:flex;justify-content:center;align-items:center;color:#fff;font-size:3rem}
-.letter-paper{position:absolute;top:10px;left:10px;right:10px;bottom:10px;background:#fff;border-radius:5px;z-index:1;transition:transform .8s .8s;padding:20px;overflow-y:auto;color:#333;text-align:right}
-.envelope.open .letter-paper{transform:translateY(-120px);z-index:3;box-shadow:0 10px 30px rgba(0,0,0,.2)}
-.template-musicbox{text-align:center;padding:20px}
-.vinyl{width:150px;height:150px;background:repeating-radial-gradient(#111 0,#111 10px,#333 11px,#333 12px);border-radius:50%;margin:0 auto 20px;display:flex;justify-content:center;align-items:center;animation:spin 4s linear infinite;border:4px solid var(--primary)}
+.brand{text-align:center;color:#f6e7ea;padding:22px 0 20px}
+.brand h1{font-family:var(--hand);font-size:2.2rem;font-weight:700;letter-spacing:.5px}
+.brand p{font-size:.9rem;opacity:.75;margin-top:2px}
+.paper{background:var(--paper);border-radius:22px;padding:24px 20px;box-shadow:0 24px 60px rgba(0,0,0,.35)}
+.step{font-size:1rem;font-weight:700;margin-bottom:12px}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px}
+.tile{font:inherit;text-align:right;background:#fff;border:2px solid var(--line);border-radius:14px;padding:12px;cursor:pointer;color:var(--ink);transition:border-color .2s,background .2s}
+.tile b{display:block;font-size:1.6rem;line-height:1.3}
+.tile span{font-weight:700;font-size:.95rem}
+.tile small{display:block;color:var(--muted);font-size:.75rem;margin-top:2px}
+.tile.on{border-color:var(--rose);background:#fff0f3}
+label{display:grid;gap:6px;font-weight:600;font-size:.9rem;margin-bottom:16px}
+label small{font-weight:400;color:var(--muted);font-size:.78rem}
+input,textarea{font:inherit;width:100%;padding:12px 14px;border:2px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
+textarea{min-height:130px;resize:vertical;line-height:1.7}
+input:focus-visible,textarea:focus-visible,.tile:focus-visible,.btn:focus-visible,.env:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.btn{font:inherit;font-weight:700;width:100%;padding:14px;border:0;border-radius:12px;background:var(--rose);color:#fff;font-size:1.05rem;cursor:pointer;transition:background .2s}
+.btn:hover{background:var(--rose-d)}
+.btn:disabled{background:#c9bdc4;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--rose-d);border:2px solid var(--rose);margin-top:10px}
+.thumbs{display:flex;gap:8px;margin:-6px 0 10px}
+.thumbs img{width:64px;height:64px;object-fit:cover;border-radius:8px;border:2px solid var(--line)}
+.status{font-size:.82rem;color:var(--muted);text-align:center;margin-top:8px;min-height:1.2em}
+.share-box{background:#fff;border:2px dashed var(--rose);border-radius:12px;padding:14px;word-break:break-all;direction:ltr;text-align:left;font-size:.85rem;margin:14px 0}
+.ok-title{font-family:var(--hand);font-size:1.8rem;text-align:center;color:var(--rose-d)}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;font-size:.9rem;opacity:0;pointer-events:none;transition:.3s}
+.toast.show{opacity:1;transform:translateX(-50%)}
+/* PIN */
+.pin{text-align:center}
+.pin h2{font-family:var(--hand);font-size:1.7rem}
+.dots{display:flex;justify-content:center;gap:14px;margin:22px 0}
+.dot{width:16px;height:16px;border-radius:50%;border:2px solid var(--rose)}
+.dot.f{background:var(--rose)}
+.keys{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:260px;margin:0 auto;direction:ltr}
+.key{font:inherit;font-size:1.4rem;padding:14px 0;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer;aspect-ratio:1}
+.key:active{background:var(--rose);color:#fff}
+.err{color:var(--rose-d);margin-top:14px;font-size:.9rem;min-height:1.3em}
+/* Viewer */
+.to{text-align:center;color:#f6e7ea;padding:8px 0 22px}
+.to span{font-size:.95rem;opacity:.7}
+.to h2{font-family:var(--hand);font-size:2.4rem;font-weight:700;line-height:1.3;overflow-wrap:anywhere}
+.cta{display:block;margin:34px auto 0;max-width:320px}
+body.viewing .brand{display:none}
+/* Envelope */
+.stage{text-align:center;max-height:360px;overflow:hidden;transition:max-height .7s ease,opacity .5s;padding-top:70px}
+.stage.done{max-height:0;opacity:0;padding:0}
+.env{position:relative;display:block;margin:0 auto;width:min(310px,84vw);aspect-ratio:3/2;border:0;background:none;cursor:pointer;font:inherit}
+.env>*{position:absolute;inset:0}
+.env-back{background:#a93450;border-radius:10px}
+.env-paper{background:#fff;inset:8px 12px;border-radius:4px;transition:transform .8s .35s ease}
+.env-front{background:var(--rose);clip-path:polygon(0 0,50% 58%,100% 0,100% 100%,0 100%);border-radius:10px}
+.env-flap{background:#c8425f;clip-path:polygon(0 0,100% 0,50% 62%);bottom:auto;height:62%;transform-origin:top;transition:transform .6s,opacity .2s .5s;backface-visibility:hidden}
+.env-seal{inset:auto;top:52%;left:50%;width:46px;height:46px;margin:-23px;border-radius:50%;background:var(--gold);display:grid;place-items:center;font-size:1.3rem;color:#7a2437;box-shadow:0 3px 8px rgba(0,0,0,.3);z-index:4;transition:opacity .3s}
+.env.open .env-flap{transform:rotateX(180deg);opacity:0}
+.env.open .env-paper{transform:translateY(-38%)}
+.env.open .env-seal{opacity:0}
+.hint{color:#f6e7ea;opacity:.8;margin-top:22px;font-size:.95rem}
+.sheet{display:grid;grid-template-rows:0fr;transition:grid-template-rows 1s ease}
+.sheet.show{grid-template-rows:1fr}
+.sheet>div{min-height:0;overflow:hidden}
+.letter{background:#fffdf9;border-radius:6px;padding:26px 22px 30px;font-family:var(--hand);font-size:1.3rem;line-height:2.2;white-space:pre-wrap;overflow-wrap:anywhere;box-shadow:0 20px 50px rgba(0,0,0,.35);background-image:repeating-linear-gradient(transparent 0,transparent calc(2.2em - 1px),rgba(217,79,107,.16) calc(2.2em - 1px),rgba(217,79,107,.16) 2.2em);background-position:0 26px}
+.letter img,.photo-card img{display:block;width:100%;border-radius:6px;margin-top:16px}
+/* Confession wall */
+.wall{display:grid;gap:22px;padding:6px 4px}
+.note{position:relative;padding:22px 18px 18px;font-family:var(--hand);font-size:1.3rem;line-height:1.9;overflow-wrap:anywhere;box-shadow:0 8px 18px rgba(0,0,0,.25);border-radius:3px;width:88%;animation:drop .7s both}
+.note::before{content:"";position:absolute;top:-11px;left:50%;width:70px;height:22px;margin-left:-35px;background:rgba(255,255,255,.55);transform:rotate(-3deg);border:1px solid rgba(0,0,0,.05)}
+.note:nth-child(odd){justify-self:start;transform:rotate(-1.6deg)}
+.note:nth-child(even){justify-self:end;transform:rotate(1.8deg)}
+.note:nth-child(4n+1){background:#fff3b0}.note:nth-child(4n+2){background:#ffd6de}.note:nth-child(4n+3){background:#d5ecdc}.note:nth-child(4n){background:#dbe6ff}
+@keyframes drop{from{opacity:0;translate:0 -24px}to{opacity:1;translate:0 0}}
+.photo-card{background:#fff;padding:10px 10px 34px;border-radius:3px;box-shadow:0 8px 18px rgba(0,0,0,.25);width:82%;justify-self:center;transform:rotate(1deg)}
+.photo-card img{margin:0}
+/* Album */
+.album{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:10px 6vw 24px;margin:0 -16px;scrollbar-width:none}
+.album::-webkit-scrollbar{display:none}
+.print{flex:0 0 78%;scroll-snap-align:center;background:#fff;padding:12px 12px 44px;border-radius:3px;box-shadow:0 12px 26px rgba(0,0,0,.35)}
+.print:nth-child(odd){transform:rotate(-2deg)}.print:nth-child(even){transform:rotate(2deg)}
+.print img,.print .blank{width:100%;aspect-ratio:1;object-fit:cover;display:block;background:#eadfe0}
+.album-note{background:var(--paper);border-radius:6px;padding:20px;font-family:var(--hand);font-size:1.25rem;line-height:2;white-space:pre-wrap;overflow-wrap:anywhere;margin-top:8px}
+/* Music box */
+.vinyl{width:170px;height:170px;margin:6px auto 12px;border-radius:50%;border:5px solid var(--gold);cursor:pointer;display:grid;place-items:center;background:repeating-radial-gradient(#121014 0,#121014 9px,#2c2830 10px,#2c2830 11px);animation:spin 5s linear infinite;box-shadow:0 14px 34px rgba(0,0,0,.5)}
 .vinyl.paused{animation-play-state:paused}
-.vinyl-center{width:50px;height:50px;background:var(--primary);border-radius:50%}
-@keyframes spin{100%{transform:rotate(360deg)}}
-.template-polaroid{position:relative;height:400px}
-.polaroid{position:absolute;background:#fff;padding:10px 10px 30px;box-shadow:0 4px 15px rgba(0,0,0,.2);width:200px;transition:transform .5s;cursor:pointer}
-.polaroid img{width:100%;height:150px;object-fit:cover;background:#eee}
-.polaroid p{text-align:center;margin-top:10px;font-family:'Courier New',monospace;font-size:.9rem;color:#333}
-.polaroid:nth-child(1){transform:rotate(-5deg) translate(20px,20px);z-index:3}
-.polaroid:nth-child(2){transform:rotate(3deg) translate(60px,60px);z-index:2}
-.polaroid:nth-child(3){transform:rotate(-2deg) translate(100px,100px);z-index:1}
-.polaroid:hover{transform:scale(1.1) rotate(0)!important;z-index:10!important}
-.media-preview{max-width:100%;border-radius:10px;margin-top:10px;display:none}
-.status-msg{font-size:.85rem;color:#747d8c;margin-top:5px;text-align:center}
-.share-box{background:#f1f2f6;padding:15px;border-radius:10px;word-break:break-all;font-size:.9rem;margin-top:15px;border:2px dashed var(--primary)}
-.loader{border:4px solid #f3f3f3;border-top:4px solid var(--primary);border-radius:50%;width:30px;height:30px;animation:spin 1s linear infinite;margin:20px auto;display:none}
+.vinyl i{width:54px;height:54px;border-radius:50%;background:var(--rose);display:block;box-shadow:inset 0 0 0 8px var(--gold)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.tap{text-align:center;color:#f6e7ea;opacity:.8;font-size:.9rem;margin-bottom:20px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01s!important}}
 </style>
 </head>
 <body>
-<div class="container">
-<div class="header" id="headerTitle">✨ صانع البطاقات التفاعلية</div>
+<main class="app">
+<header class="brand" id="brand"><h1>صانع البطاقات</h1><p>اكتب كلامك، واختار شكل البطاقة، وابعتها برابط</p></header>
 
-<div class="content" id="creatorScreen">
-  <div class="form-group"><label>اختر القالب التفاعلي</label>
-    <select id="templateSelect">
-      <option value="envelope">💌 ظرف حب ثلاثي الأبعاد (3D)</option>
-      <option value="musicbox">🎵 صندوق الموسيقى (مع يوتيوب)</option>
-      <option value="polaroid">📸 معرض ذكريات بولارويد</option>
-    </select></div>
-  <div class="form-group"><label>اسم المُهدى إليه</label><input type="text" id="inputName" placeholder="مثال: إلى أغلى الناس"></div>
-  <div class="form-group"><label>رسالتك الخاصة</label><textarea id="inputMessage" placeholder="اكتب أجمل كلماتك هنا..."></textarea></div>
-  <div class="form-group"><label>صورة (اختياري — تُضغط وتُحفظ مجاناً)</label><input type="file" id="inputImage" accept="image/*"><img id="imagePreview" class="media-preview"><div class="status-msg" id="imgStatus"></div></div>
-  <div class="form-group hidden" id="youtubeGroup"><label>رابط موسيقى يوتيوب (اختياري)</label><input type="text" id="inputYoutube" placeholder="https://www.youtube.com/watch?v=..."></div>
-  <div class="form-group"><label>رمز PIN (اختياري، 4 أرقام)</label><input type="password" id="inputPin" maxlength="4" placeholder="اتركه فارغاً إذا لم ترد قفلاً"></div>
-  <button class="btn" id="generateBtn" onclick="generateCard()">🚀 إنشاء ومشاركة البطاقة</button>
-  <div class="loader" id="loader"></div>
-  <div class="status-msg" id="statusMsg"></div>
-</div>
-
-<div class="content hidden" id="shareScreen">
-  <h3 style="text-align:center;color:var(--primary);margin-bottom:15px">🎉 تم إنشاء بطاقتك بنجاح!</h3>
-  <p style="text-align:center;margin-bottom:15px">انسخ الرابط وأرسله للشخص المميز:</p>
-  <div class="share-box" id="shareLink"></div>
-  <button class="btn" onclick="copyLink()">📋 نسخ الرابط</button>
-  <button class="btn btn-secondary" onclick="location.reload()">➕ إنشاء بطاقة جديدة</button>
-</div>
-
-<div class="pin-screen hidden" id="pinScreen">
-  <h2>🔒 هذه البطاقة محمية</h2><p>أدخل رمز PIN المكون من 4 أرقام</p>
-  <div class="pin-dots" id="pinDots"><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div></div>
-  <div class="pin-keypad">
-    <button class="pin-btn" onclick="enterPin(1)">1</button><button class="pin-btn" onclick="enterPin(2)">2</button><button class="pin-btn" onclick="enterPin(3)">3</button>
-    <button class="pin-btn" onclick="enterPin(4)">4</button><button class="pin-btn" onclick="enterPin(5)">5</button><button class="pin-btn" onclick="enterPin(6)">6</button>
-    <button class="pin-btn" onclick="enterPin(7)">7</button><button class="pin-btn" onclick="enterPin(8)">8</button><button class="pin-btn" onclick="enterPin(9)">9</button>
-    <button class="pin-btn" onclick="clearPin()">C</button><button class="pin-btn" onclick="enterPin(0)">0</button><button class="pin-btn" onclick="backspacePin()">⌫</button>
+<section class="paper" id="creatorScreen">
+  <h2 class="step">اختار شكل البطاقة</h2>
+  <div class="tiles" id="tiles">
+    <button type="button" class="tile on" data-t="envelope"><b>💌</b><span>ظرف الرسالة</span><small>يتفتح وتظهر الرسالة</small></button>
+    <button type="button" class="tile" data-t="wall"><b>🌷</b><span>جدار الاعترافات</span><small>كل سطر ورقة لوحده</small></button>
+    <button type="button" class="tile" data-t="polaroid"><b>📸</b><span>ألبوم الذكريات</span><small>صور تتقلب بالسحب</small></button>
+    <button type="button" class="tile" data-t="musicbox"><b>🎵</b><span>صندوق الموسيقى</span><small>مع أغنية من يوتيوب</small></button>
   </div>
-  <p id="pinError" style="color:red;margin-top:15px;display:none">رمز PIN غير صحيح</p>
-</div>
+  <label>اسم الشخص اللي هتبعتله<input type="text" id="inputName" placeholder="مثال: أغلى الناس" autocomplete="off"></label>
+  <label>رسالتك<textarea id="inputMessage" placeholder="اكتب أجمل كلامك هنا..."></textarea><small>في "جدار الاعترافات" كل سطر جديد بيظهر في ورقة منفصلة</small></label>
+  <label>صور (اختياري، لحد 3)<input type="file" id="inputImage" accept="image/*" multiple><small>بتتضغط تلقائياً وبتتحفظ مجاناً</small></label>
+  <div class="thumbs" id="thumbs"></div><div class="status" id="imgStatus"></div>
+  <label id="youtubeGroup" class="hidden">رابط أغنية من يوتيوب<input type="text" id="inputYoutube" dir="ltr" placeholder="https://www.youtube.com/watch?v=..."></label>
+  <label>رمز سري من 4 أرقام (اختياري)<input type="password" id="inputPin" inputmode="numeric" maxlength="4" placeholder="سيبه فاضي لو مش عايز قفل"></label>
+  <button class="btn" id="generateBtn" onclick="generateCard()">إنشاء رابط البطاقة</button>
+  <div class="status" id="statusMsg"></div>
+</section>
 
-<div class="content hidden" id="viewerScreen" style="padding:0;background:#f8f9fa;min-height:500px">
+<section class="paper hidden" id="shareScreen">
+  <h2 class="ok-title">البطاقة جاهزة</h2>
+  <p style="text-align:center;margin-top:6px">انسخ الرابط وابعته للشخص المميز:</p>
+  <div class="share-box" id="shareLink"></div>
+  <button class="btn" onclick="copyLink()">نسخ الرابط</button>
+  <button class="btn ghost" onclick="location.href=location.pathname">إنشاء بطاقة جديدة</button>
+</section>
+
+<section class="paper pin hidden" id="pinScreen">
+  <h2>البطاقة دي محمية</h2><p style="margin-top:6px">اكتب الرمز السري المكون من 4 أرقام</p>
+  <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+  <div class="keys">
+    <button class="key" onclick="enterPin(1)">1</button><button class="key" onclick="enterPin(2)">2</button><button class="key" onclick="enterPin(3)">3</button>
+    <button class="key" onclick="enterPin(4)">4</button><button class="key" onclick="enterPin(5)">5</button><button class="key" onclick="enterPin(6)">6</button>
+    <button class="key" onclick="enterPin(7)">7</button><button class="key" onclick="enterPin(8)">8</button><button class="key" onclick="enterPin(9)">9</button>
+    <button class="key" onclick="clearPin()">C</button><button class="key" onclick="enterPin(0)">0</button><button class="key" onclick="backspacePin()">⌫</button>
+  </div>
+  <p class="err" id="pinError"></p>
+</section>
+
+<section class="hidden" id="viewerScreen">
   <div id="viewerContent"></div>
-  <div style="text-align:center;padding:20px"><button class="btn" onclick="location.href=location.pathname" style="max-width:300px">✨ اصنع بطاقتك الخاصة مجاناً</button></div>
-</div>
-</div>
+  <button class="btn ghost cta" style="color:#f6e7ea;border-color:#f6e7ea55" onclick="location.href=location.pathname">اصنع بطاقتك الخاصة مجاناً</button>
+</section>
+</main>
+<div class="toast" id="toast"></div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
@@ -114,140 +166,146 @@ const firebaseConfig = {
   appId: "1:183579389817:web:afb7f82b6c70a1ed1149a8",
   measurementId: "G-13G48CSRWV"
 };
+const db = getFirestore(initializeApp(firebaseConfig));
+const $ = id => document.getElementById(id);
+let tpl = 'envelope';
+window.cardData = {}; window.pendingImages = []; window.currentPinInput = ""; window.correctPin = "";
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-window.cardData = {};
-window.pendingImage = "";
-window.currentPinInput = "";
-window.correctPin = "";
+const toast = t => { const el = $('toast'); el.textContent = t; el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 2200); };
+const esc = t => { const d = document.createElement('div'); d.textContent = t || ''; return d.innerHTML; };
+const ytId = url => { const m = (url || '').match(/^.*(youtu.be\/|v\/|embed\/|watch\?v=|&v=)([^#&?]*).*/); return (m && m[2].length === 11) ? m[2] : ''; };
 
 window.onload = async () => {
-  const cardId = new URLSearchParams(window.location.search).get('id');
-  if (cardId) {
-    try {
-      const snap = await getDoc(doc(db, "cards", cardId));
-      if (snap.exists()) {
-        window.cardData = snap.data();
-        window.correctPin = window.cardData.pin || '';
-        window.correctPin ? showScreen('pinScreen') : showCard();
-      } else { alert('البطاقة غير موجودة أو تم حذفها.'); location.href = location.pathname; }
-    } catch (e) { console.error(e); alert('خطأ في تحميل البطاقة. تأكد من تفعيل Firestore.'); location.href = location.pathname; }
-  }
-  document.getElementById('templateSelect').addEventListener('change', e =>
-    document.getElementById('youtubeGroup').classList.toggle('hidden', e.target.value !== 'musicbox'));
-  document.getElementById('inputImage').addEventListener('change', handleImageSelect);
+  document.querySelectorAll('.tile').forEach(b => b.addEventListener('click', () => {
+    tpl = b.dataset.t;
+    document.querySelectorAll('.tile').forEach(x => x.classList.toggle('on', x === b));
+    $('youtubeGroup').classList.toggle('hidden', tpl !== 'musicbox');
+  }));
+  $('inputImage').addEventListener('change', handleImages);
+  const cardId = new URLSearchParams(location.search).get('id');
+  if (!cardId) return;
+  try {
+    const snap = await getDoc(doc(db, "cards", cardId));
+    if (!snap.exists()) { toast('البطاقة مش موجودة أو اتمسحت'); setTimeout(() => location.href = location.pathname, 1800); return; }
+    window.cardData = snap.data();
+    window.correctPin = window.cardData.pin || '';
+    window.correctPin ? showScreen('pinScreen') : showCard();
+  } catch (e) { console.error(e); toast('حصلت مشكلة في تحميل البطاقة'); }
 };
 
-// ضغط الصورة وحفظها كـ Base64 داخل Firestore (بديل Storage المجاني)
-function compressImage(file, maxBytes = 800 * 1024) {
+// ضغط الصورة وحفظها Base64 داخل Firestore
+function compressImage(file, maxLen = 300 * 1024) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = ev => {
       const img = new Image();
       img.onload = () => {
-        const draw = (maxDim, q) => {
-          const s = Math.min(1, maxDim / Math.max(img.width, img.height));
-          const w = Math.max(1, Math.round(img.width * s)), h = Math.max(1, Math.round(img.height * s));
-          const c = document.createElement('canvas'); c.width = w; c.height = h;
-          c.getContext('2d').drawImage(img, 0, 0, w, h);
+        const draw = (dim, q) => {
+          const s = Math.min(1, dim / Math.max(img.width, img.height));
+          const c = document.createElement('canvas');
+          c.width = Math.max(1, Math.round(img.width * s)); c.height = Math.max(1, Math.round(img.height * s));
+          c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
           return c.toDataURL('image/jpeg', q);
         };
-        let dim = 1000, q = 0.72, url = draw(dim, q);
-        while (url.length > maxBytes && q > 0.35) { q -= 0.12; url = draw(dim, q); }
-        while (url.length > maxBytes && dim > 320) { dim = Math.round(dim * 0.75); url = draw(dim, q); }
+        let dim = 900, q = 0.72, url = draw(dim, q);
+        while (url.length > maxLen && q > 0.4) { q -= 0.1; url = draw(dim, q); }
+        while (url.length > maxLen && dim > 320) { dim = Math.round(dim * 0.75); url = draw(dim, q); }
         resolve(url);
       };
-      img.onerror = () => reject(new Error('تعذر قراءة الصورة'));
+      img.onerror = () => reject(new Error('مقدرتش أقرا الصورة'));
       img.src = ev.target.result;
     };
-    reader.onerror = () => reject(new Error('تعذر قراءة الملف'));
+    reader.onerror = () => reject(new Error('مقدرتش أقرا الملف'));
     reader.readAsDataURL(file);
   });
 }
 
-async function handleImageSelect(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-  document.getElementById('imgStatus').innerText = '⏳ جاري ضغط الصورة...';
+async function handleImages(e) {
+  const files = [...e.target.files].slice(0, 3);
+  if (!files.length) return;
+  $('imgStatus').textContent = 'جاري ضغط الصور...';
   try {
-    window.pendingImage = await compressImage(file);
-    document.getElementById('imagePreview').src = window.pendingImage;
-    document.getElementById('imagePreview').style.display = 'block';
-    document.getElementById('imgStatus').innerText = '✅ تم ضغط الصورة (' + Math.round(window.pendingImage.length / 1024) + ' KB)';
-  } catch (err) { document.getElementById('imgStatus').innerText = '❌ ' + err.message; }
+    window.pendingImages = await Promise.all(files.map(f => compressImage(f)));
+    $('thumbs').innerHTML = window.pendingImages.map(s => `<img src="${s}" alt="">`).join('');
+    $('imgStatus').textContent = 'تم تجهيز ' + files.length + ' صورة';
+  } catch (err) { $('imgStatus').textContent = err.message; }
 }
-window.handleImageSelect = handleImageSelect;
 
 window.generateCard = async () => {
   const payload = {
-    name: document.getElementById('inputName').value.trim(),
-    message: document.getElementById('inputMessage').value.trim(),
-    template: document.getElementById('templateSelect').value,
-    youtube: document.getElementById('inputYoutube').value.trim(),
-    pin: document.getElementById('inputPin').value.trim(),
-    image: window.pendingImage,
-    createdAt: new Date().toISOString()
+    name: $('inputName').value.trim(), message: $('inputMessage').value.trim(), template: tpl,
+    youtube: $('inputYoutube').value.trim(), pin: $('inputPin').value.trim(),
+    images: window.pendingImages, createdAt: new Date().toISOString()
   };
-  if (!payload.name || !payload.message) { alert('يرجى إدخال الاسم والرسالة على الأقل.'); return; }
-  if (JSON.stringify(payload).length > 950000) { alert('حجم البيانات كبير جداً على قاعدة البيانات المجانية، استخدم صورة أصغر.'); return; }
-
-  const btn = document.getElementById('generateBtn'), loader = document.getElementById('loader'), status = document.getElementById('statusMsg');
-  btn.disabled = true; loader.style.display = 'block'; status.innerText = 'جاري حفظ البطاقة...';
+  if (!payload.name || !payload.message) { toast('اكتب الاسم والرسالة الأول'); return; }
+  if (payload.pin && !/^\d{4}$/.test(payload.pin)) { toast('الرمز السري لازم 4 أرقام'); return; }
+  if (JSON.stringify(payload).length > 950000) { toast('الصور كبيرة، جرّب صور أقل'); return; }
+  const btn = $('generateBtn'), st = $('statusMsg');
+  btn.disabled = true; st.textContent = 'جاري حفظ البطاقة...';
   try {
     const ref = await addDoc(collection(db, "cards"), payload);
-    document.getElementById('shareLink').innerText = `${location.origin}${location.pathname}?id=${ref.id}`;
-    loader.style.display = 'none'; btn.disabled = false; showScreen('shareScreen');
+    $('shareLink').textContent = `${location.origin}${location.pathname}?id=${ref.id}`;
+    showScreen('shareScreen');
   } catch (e) {
     console.error(e);
-    alert('خطأ: ' + e.message + '\n\nتأكد من تفعيل Firestore Database بوضع Test mode');
-    loader.style.display = 'none'; btn.disabled = false; status.innerText = '';
+    st.textContent = 'فشل الحفظ: ' + e.message + ' (راجع قواعد Firestore)';
   }
+  btn.disabled = false;
 };
 
 window.showCard = () => {
   showScreen('viewerScreen');
-  const d = window.cardData;
-  let html = `<h2 style="text-align:center;color:var(--primary);padding:20px 0">إلى: ${esc(d.name)} ❤️</h2>`;
-  if (d.template === 'envelope') {
-    html += `<div class="template-envelope" onclick="this.querySelector('.envelope').classList.toggle('open')"><div class="envelope"><div class="envelope-flap"></div><div class="envelope-body">💌<br><small style="font-size:14px">اضغط للفتح</small></div><div class="letter-paper"><p style="white-space:pre-wrap;line-height:1.8">${esc(d.message)}</p>${d.image ? `<img src="${d.image}" style="max-width:100%;border-radius:8px;margin-top:10px">` : ''}</div></div></div>`;
+  const d = window.cardData, imgs = d.images || (d.image ? [d.image] : []);
+  const lines = (d.message || '').split('\n').map(s => s.trim()).filter(Boolean);
+  let h = `<div class="to"><span>إلى</span><h2>${esc(d.name)}</h2></div>`;
+  if (d.template === 'wall') {
+    h += `<div class="wall">${lines.map((l, i) => `<div class="note" style="animation-delay:${i * .25}s">${esc(l)}</div>`).join('')}${imgs.map(s => `<div class="photo-card"><img src="${s}" alt=""></div>`).join('')}</div>`;
+  } else if (d.template === 'polaroid') {
+    const items = imgs.length ? imgs.map(s => `<img src="${s}" alt="">`) : ['<div class="blank"></div>'];
+    h += `<div class="album">${items.map(x => `<div class="print">${x}</div>`).join('')}</div><div class="album-note">${esc(d.message)}</div>`;
   } else if (d.template === 'musicbox') {
     const yt = ytId(d.youtube);
-    html += `<div class="template-musicbox"><div class="vinyl paused" id="vinyl" onclick="toggleMusic('${yt}')"><div class="vinyl-center"></div></div><p style="margin-bottom:20px;color:#666">اضغط على القرص للتشغيل</p><div style="background:#fff;padding:20px;border-radius:15px;margin:0 20px;box-shadow:0 5px 15px rgba(0,0,0,.1)"><p style="white-space:pre-wrap;line-height:1.8">${esc(d.message)}</p>${d.image ? `<img src="${d.image}" style="max-width:100%;border-radius:8px;margin-top:15px">` : ''}</div>${yt ? '<div id="ytPlayerContainer" style="margin-top:20px"></div>' : ''}</div>`;
+    h += `<div class="vinyl paused" id="vinyl" role="button" tabindex="0" onclick="toggleMusic('${yt}')"><i></i></div><p class="tap">${yt ? 'اضغط على الأسطوانة لتشغيل الأغنية' : 'صندوق الموسيقى'}</p><div class="letter">${esc(d.message)}${imgs.map(s => `<img src="${s}" alt="">`).join('')}</div><div id="ytBox" style="margin-top:18px"></div>`;
   } else {
-    html += `<div class="template-polaroid">`;
-    const parts = d.message.split('\n').filter(m => m.trim());
-    const p = parts.length >= 3 ? parts : [d.message, 'أحبك', 'إلى الأبد'];
-    for (let i = 0; i < 3; i++) html += `<div class="polaroid" style="top:${20 + i * 30}px;left:${20 + i * 10}px">${d.image ? `<img src="${d.image}">` : '<div style="width:100%;height:150px;background:#ddd;display:flex;align-items:center;justify-content:center;color:#999">صورة</div>'}<p>${esc(p[i] || 'ذكرى جميلة')}</p></div>`;
-    html += `</div>`;
+    h += `<div class="stage" id="stage"><button class="env" onclick="openEnv(this)" aria-label="افتح الظرف"><span class="env-back"></span><span class="env-paper"></span><span class="env-front"></span><span class="env-flap"></span><span class="env-seal">❤</span></button><p class="hint">اضغط على الظرف لفتحه</p></div><div class="sheet" id="sheet"><div><div class="letter">${esc(d.message)}${imgs.map(s => `<img src="${s}" alt="">`).join('')}</div></div></div>`;
   }
-  document.getElementById('viewerContent').innerHTML = html;
+  $('viewerContent').innerHTML = h;
+};
+
+window.openEnv = el => {
+  if (el.classList.contains('open')) return;
+  el.classList.add('open');
+  setTimeout(() => { $('stage').classList.add('done'); $('sheet').classList.add('show'); }, 1000);
 };
 
 window.toggleMusic = yt => {
-  const v = document.getElementById('vinyl'), c = document.getElementById('ytPlayerContainer');
-  if (v.classList.contains('paused')) { v.classList.remove('paused'); if (yt && !c.innerHTML) c.innerHTML = `<iframe width="100%" height="200" src="https://www.youtube.com/embed/${yt}?autoplay=1&loop=1&playlist=${yt}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`; }
-  else { v.classList.add('paused'); c.innerHTML = ''; }
+  const v = $('vinyl'), c = $('ytBox');
+  if (v.classList.contains('paused')) {
+    v.classList.remove('paused');
+    if (yt && !c.innerHTML) c.innerHTML = `<iframe width="100%" height="200" style="border:0;border-radius:10px" src="https://www.youtube.com/embed/${yt}?autoplay=1&loop=1&playlist=${yt}" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+  } else { v.classList.add('paused'); c.innerHTML = ''; }
 };
-
-function ytId(url) { if (!url) return ''; const m = url.match(/^.*(youtu.be\/|v\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/); return (m && m[2].length === 11) ? m[2] : ''; }
-function esc(t) { const d = document.createElement('div'); d.textContent = t || ''; return d.innerHTML; }
 
 window.showScreen = id => {
-  ['creatorScreen','shareScreen','pinScreen','viewerScreen'].forEach(x => document.getElementById(x).classList.add('hidden'));
-  if (id === 'loader') { document.getElementById('creatorScreen').classList.remove('hidden'); document.getElementById('loader').style.display = 'block'; return; }
-  document.getElementById(id).classList.remove('hidden');
-  document.getElementById('headerTitle').innerText = id === 'viewerScreen' ? '🎁 بطاقة خاصة لك' : '✨ صانع البطاقات التفاعلية';
+  ['creatorScreen', 'shareScreen', 'pinScreen', 'viewerScreen'].forEach(x => $(x).classList.add('hidden'));
+  $(id).classList.remove('hidden');
+  document.body.classList.toggle('viewing', id === 'viewerScreen');
+  scrollTo(0, 0);
 };
 
-window.copyLink = () => navigator.clipboard.writeText(document.getElementById('shareLink').innerText).then(() => alert('✅ تم نسخ الرابط!'));
+window.copyLink = () => navigator.clipboard.writeText($('shareLink').textContent).then(() => toast('تم نسخ الرابط'), () => toast('انسخ الرابط يدوياً'));
 
-window.enterPin = n => { if (window.currentPinInput.length < 4) { window.currentPinInput += n; dots(); if (window.currentPinInput.length === 4) setTimeout(check, 300); } };
-window.backspacePin = () => { window.currentPinInput = window.currentPinInput.slice(0, -1); dots(); document.getElementById('pinError').style.display = 'none'; };
-window.clearPin = () => { window.currentPinInput = ''; dots(); document.getElementById('pinError').style.display = 'none'; };
-function dots() { document.querySelectorAll('.pin-dot').forEach((d, i) => d.classList.toggle('filled', i < window.currentPinInput.length)); }
-function check() { if (window.currentPinInput === window.correctPin) showCard(); else { document.getElementById('pinError').style.display = 'block'; window.currentPinInput = ''; dots(); } }
+const dots = () => document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('f', i < window.currentPinInput.length));
+window.enterPin = n => {
+  if (window.currentPinInput.length >= 4) return;
+  window.currentPinInput += n; dots();
+  if (window.currentPinInput.length === 4) setTimeout(() => {
+    if (window.currentPinInput === window.correctPin) showCard();
+    else { $('pinError').textContent = 'الرمز غلط، جرّب تاني'; window.currentPinInput = ''; dots(); }
+  }, 250);
+};
+window.backspacePin = () => { window.currentPinInput = window.currentPinInput.slice(0, -1); dots(); $('pinError').textContent = ''; };
+window.clearPin = () => { window.currentPinInput = ''; dots(); $('pinError').textContent = ''; };
 </script>
 </body>
 </html>
